@@ -3,7 +3,7 @@ $dbServer = 'localhost';
 $user = 'root';
 $password = '';
 $dbName = 'beemusic';
-$dbPort = 9000;
+$dbPort = 9001;
 
 ob_start();
 $tz = date_default_timezone_set('Asia/Ho_Chi_Minh');

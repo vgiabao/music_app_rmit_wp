@@ -2,11 +2,13 @@
 
 class  Account
 {
+    private $db_connection;
     public $errorArray;
 
-    public function __construct()
+    public function __construct($db_connection)
     {
         $this->errorArray = array();
+        $this->db_connection = $db_connection;
     }
 
     public function register($userName, $name, $email, $phone, $pw1, $pw2)
@@ -14,15 +16,24 @@ class  Account
         $this->validateUserName($userName);
         $this->validateName($name);
         $this->validateEmail($email);
-        $this->validatePhoneNumber($phone);
         $this->validatePassword($pw1, $pw2);
 
         if (empty($this->errorArray)) {
             //TODO: insert to the db;
-            return true;
+            $this->addUserToDB($userName, $name, $email, $pw1, $phone);
+            return false;
         }
         return false;
     }
+
+    private function addUserToDB($username, $fullName, $email, $password, $phone): void
+    {
+        $hashingPassword = md5($password);
+        $defaultUserImagePath = "assets/images/default-pics/user.png";
+        $formattedDate = date("d-m-Y");
+        mysqli_query($this->db_connection, "INSERT INTO users VALUES (null, '$username', '$fullName','$email', '$hashingPassword', '$formattedDate', '$defaultUserImagePath', '$phone')");
+    }
+
 
     public function getErrors($error)
     {

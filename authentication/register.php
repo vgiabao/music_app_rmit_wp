@@ -2,7 +2,7 @@
 require_once ('includes/config.php');
 include('includes/classes/Constants.php');
 include('includes/classes/Account.php');
-$account = new Account();
+$account = new Account($db_connection);
 include('includes/handlers/register-handler.php');
 
 function getPreviousValue($inputName)
